@@ -161,7 +161,7 @@ void UTraceInteractionComponent::StopInteraction()
 
 void UTraceInteractionComponent::UpdateInteractionPercentage()
 {
-	UE_LOG(LogTemp, Warning, TEXT("%f %f %f"), InteractionPercentage, InteractionDuration, InteractionInterval);
+	// UE_LOG(LogTemp, Warning, TEXT("%f %f %f"), InteractionPercentage, InteractionDuration, InteractionInterval);
 	InteractionPercentage = InteractionPercentage + 1/InteractionDuration * InteractionInterval;
 	if (ActorInteractionWidget) ActorInteractionWidget->SetInteractionPercent(InteractionPercentage);
 

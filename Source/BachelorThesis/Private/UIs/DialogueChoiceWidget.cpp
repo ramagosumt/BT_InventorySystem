@@ -1,6 +1,6 @@
 #include "UIs/DialogueChoiceWidget.h"
 #include "Components/Button.h"
-#include "Components/GraphDialogueComponent.h"
+#include "Components/DialogueComponent.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -30,5 +30,5 @@ void UDialogueChoiceWidget::OnChoiceUnhovered()
 
 void UDialogueChoiceWidget::UpdateDialogueComponent()
 {
-	if (OwningDialogueComponent) OwningDialogueComponent->UpdatePath(DialogueIndex, ChoiceIndex);
+	if (OwningDialogueComponent) OwningDialogueComponent->SelectChoiceDialogue(ChoiceIndex);
 }

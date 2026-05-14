@@ -7,7 +7,7 @@
 class UButton;
 class UImage;
 class UTextBlock;
-class UGraphDialogueComponent;
+class UDialogueComponent;
 
 /**
  * 
@@ -27,14 +27,14 @@ class BACHELORTHESIS_API UDialogueChoiceWidget : public UUserWidget
 	UButton* ChoiceButton;
 	
 	UPROPERTY()
-	UGraphDialogueComponent* OwningDialogueComponent;
+	UDialogueComponent* OwningDialogueComponent;
 
 	FText ChoiceText;
 	int32 ChoiceIndex;
 	int32 DialogueIndex;
 
 public:
-	FORCEINLINE void SetOwningDialogueComponent(UGraphDialogueComponent* NewDialogueComponent) { OwningDialogueComponent = NewDialogueComponent; }
+	FORCEINLINE void SetOwningDialogueComponent(UDialogueComponent* NewDialogueComponent) { OwningDialogueComponent = NewDialogueComponent; }
 	FORCEINLINE void SetChoiceText(const FText& NewChoiceText) { ChoiceText = NewChoiceText; }
 	FORCEINLINE void SetChoiceIndex(const int32 NewChoiceIndex) { ChoiceIndex = NewChoiceIndex; }
 	FORCEINLINE void SetDialogueIndex(const int32 NewDialogueIndex) { DialogueIndex = NewDialogueIndex; }

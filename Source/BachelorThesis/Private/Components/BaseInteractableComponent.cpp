@@ -1,9 +1,5 @@
 #include "Components/BaseInteractableComponent.h"
-#include "Actors/BasePickupItem.h"
-#include "Actors/BasePickupJournalItem.h"
-#include "Actors/BasePickupQuestItem.h"
 #include "Characters/BachelorThesisCharacter.h"
-#include "Characters/BaseNPC.h"
 #include "Components/ShapeComponent.h"
 #include "Components/WidgetComponent.h"
 
@@ -35,110 +31,40 @@ bool UBaseInteractableComponent::IsFocusable(const AActor* ActorToFocus) const
 
 FInteractionData UBaseInteractableComponent::GetOwnerInteractionData() const
 {
-	if (GetOwner())
-	{
-		ABasePickupItem* BasePickupItem = Cast<ABasePickupItem>(GetOwner());
-		ABasePickupQuestItem* BasePickupQuestItem = Cast<ABasePickupQuestItem>(GetOwner());
-		ABasePickupJournalItem* BasePickupJournalItem = Cast<ABasePickupJournalItem>(GetOwner());
-		ABaseNPC* BaseNPC = Cast<ABaseNPC>(GetOwner());
-
-		if (BasePickupItem) return BasePickupItem->InteractionData;
-		if (BasePickupQuestItem) return BasePickupQuestItem->InteractionData;
-		if (BasePickupJournalItem) return BasePickupJournalItem->InteractionData;
-		if (BaseNPC) return BaseNPC->InteractionData;
-	}
-
+	if (GetOwner()) 
+		if (IInteractionInterface* InteractableActor = Cast<IInteractionInterface>(GetOwner())) 
+			return InteractableActor->InteractionData;
+	
 	return FInteractionData();
 }
 
 void UBaseInteractableComponent::BeginFocus()
 {
-	IInteractionInterface::BeginFocus();
-
 	if (GetOwner())
-	{
-		ABasePickupItem* BasePickupItem = Cast<ABasePickupItem>(GetOwner());
-		ABasePickupQuestItem* BasePickupQuestItem = Cast<ABasePickupQuestItem>(GetOwner());
-		ABasePickupJournalItem* BasePickupJournalItem = Cast<ABasePickupJournalItem>(GetOwner());
-		ABaseNPC* BaseNPC = Cast<ABaseNPC>(GetOwner());
-
-		if (BasePickupItem)
+		if (IInteractionInterface* InteractableActor = Cast<IInteractionInterface>(GetOwner()))
 		{
-			BasePickupItem->BeginFocus();
-			if (const auto Widget = Cast<UWidgetComponent>(BasePickupItem->GetComponentByClass(UWidgetComponent::StaticClass()))) Widget->SetHiddenInGame(false);
+			InteractableActor->BeginFocus();
+			if (const auto Widget = Cast<UWidgetComponent>(GetOwner()->GetComponentByClass(UWidgetComponent::StaticClass())))
+				Widget->SetHiddenInGame(false);
 		}
-		
-		else if (BasePickupQuestItem)
-		{
-			BasePickupQuestItem->BeginFocus();
-			if (const auto Widget = Cast<UWidgetComponent>(BasePickupQuestItem->GetComponentByClass(UWidgetComponent::StaticClass()))) Widget->SetHiddenInGame(false);
-		}
-		
-		else if (BasePickupJournalItem)
-		{
-			BasePickupJournalItem->BeginFocus();
-			if (const auto Widget = Cast<UWidgetComponent>(BasePickupJournalItem->GetComponentByClass(UWidgetComponent::StaticClass()))) Widget->SetHiddenInGame(false);
-		}
-
-		else if (BaseNPC)
-		{
-			BaseNPC->BeginFocus();
-			if (const auto Widget = Cast<UWidgetComponent>(BaseNPC->GetComponentByClass(UWidgetComponent::StaticClass()))) Widget->SetHiddenInGame(false);
-		}
-	}
 }
 
 void UBaseInteractableComponent::EndFocus()
 {
-	IInteractionInterface::BeginFocus();
-	
 	if (GetOwner())
-	{
-		ABasePickupItem* BasePickupItem = Cast<ABasePickupItem>(GetOwner());
-		ABasePickupQuestItem* BasePickupQuestItem = Cast<ABasePickupQuestItem>(GetOwner());
-		ABasePickupJournalItem* BasePickupJournalItem = Cast<ABasePickupJournalItem>(GetOwner());
-		ABaseNPC* BaseNPC = Cast<ABaseNPC>(GetOwner());
-
-		if (BasePickupItem)
+		if (IInteractionInterface* InteractableActor = Cast<IInteractionInterface>(GetOwner()))
 		{
-			BasePickupItem->EndFocus();
-			if (const auto Widget = Cast<UWidgetComponent>(BasePickupItem->GetComponentByClass(UWidgetComponent::StaticClass()))) Widget->SetHiddenInGame(true);
+			InteractableActor->EndFocus();
+			if (const auto Widget = Cast<UWidgetComponent>(GetOwner()->GetComponentByClass(UWidgetComponent::StaticClass())))
+				Widget->SetHiddenInGame(true);
 		}
-		
-		else if (BasePickupQuestItem)
-		{
-			BasePickupQuestItem->EndFocus();
-			if (const auto Widget = Cast<UWidgetComponent>(BasePickupQuestItem->GetComponentByClass(UWidgetComponent::StaticClass()))) Widget->SetHiddenInGame(true);
-		}
-		
-		else if (BasePickupJournalItem)
-		{
-			BasePickupJournalItem->EndFocus();
-			if (const auto Widget = Cast<UWidgetComponent>(BasePickupJournalItem->GetComponentByClass(UWidgetComponent::StaticClass()))) Widget->SetHiddenInGame(true);
-		}
-
-		else if (BaseNPC)
-		{
-			BaseNPC->EndFocus();
-			if (const auto Widget = Cast<UWidgetComponent>(BaseNPC->GetComponentByClass(UWidgetComponent::StaticClass()))) Widget->SetHiddenInGame(true);
-		}
-	}
 }
 
 void UBaseInteractableComponent::Interact(ABachelorThesisCharacter* PlayerCharacter)
 {
-	if (GetOwner())
-	{
-		ABasePickupItem* BasePickupItem = Cast<ABasePickupItem>(GetOwner());
-		ABasePickupQuestItem* BasePickupQuestItem = Cast<ABasePickupQuestItem>(GetOwner());
-		ABasePickupJournalItem* BasePickupJournalItem = Cast<ABasePickupJournalItem>(GetOwner());
-		ABaseNPC* BaseNPC = Cast<ABaseNPC>(GetOwner());
-
-		if (BasePickupItem) BasePickupItem->Interact(PlayerCharacter);
-		else if (BasePickupQuestItem) BasePickupQuestItem->Interact(PlayerCharacter);
-		else if (BasePickupJournalItem) BasePickupJournalItem->Interact(PlayerCharacter);
-		else if (BaseNPC) BaseNPC->Interact(PlayerCharacter);
-	}
+	if (GetOwner()) 
+		if (IInteractionInterface* InteractableActor = Cast<IInteractionInterface>(GetOwner())) 
+			InteractableActor->Interact(PlayerCharacter);
 }
 
 void UBaseInteractableComponent::OnInteractionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)

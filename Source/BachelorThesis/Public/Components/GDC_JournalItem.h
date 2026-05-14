@@ -1,10 +1,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/GraphDialogueComponent.h"
+#include "Components/DialogueComponent.h"
 #include "GDC_JournalItem.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDialogueEnd);
+// DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDialogueEnd);
 
 class ABachelorThesisCharacter;
 
@@ -12,14 +12,14 @@ class ABachelorThesisCharacter;
  * 
  */
 UCLASS()
-class BACHELORTHESIS_API UGDC_JournalItem : public UGraphDialogueComponent
+class BACHELORTHESIS_API UGDC_JournalItem : public UDialogueComponent
 {
 	GENERATED_BODY()
 
 public:
-	FOnDialogueEnd OnDialogueEnd;
+	// FOnDialogueEnd OnDialogueEnd;
 
 protected:
-	virtual void ExecuteDialogue() override;
+	//virtual void ExecuteDialogue() override;
 	
 };

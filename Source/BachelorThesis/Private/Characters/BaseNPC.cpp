@@ -1,6 +1,6 @@
 #include "Characters/BaseNPC.h"
 #include "Components/BaseInteractableComponent.h"
-#include "Components/GraphDialogueComponent.h"
+#include "Components/DialogueComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "Components/WidgetComponent.h"
 #include "UIs/InteractionButtonWidget.h"
@@ -37,7 +37,7 @@ ABaseNPC::ABaseNPC()
 
 	UpdateInteractionData();
 
-	DialogueComponent = CreateDefaultSubobject<UGraphDialogueComponent>(TEXT("DialogueComponent"));
+	DialogueComponent = CreateDefaultSubobject<UDialogueComponent>(TEXT("DialogueComponent"));
 }
 
 void ABaseNPC::OnConstruction(const FTransform& Transform)
@@ -76,7 +76,7 @@ void ABaseNPC::Interact(ABachelorThesisCharacter* PlayerCharacter)
 {
 	if (DialogueComponent)
 	{
-		DialogueComponent->OpenConversation();
+		DialogueComponent->Interact(PlayerCharacter);
 	}
 }
 
