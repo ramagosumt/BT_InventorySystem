@@ -6,7 +6,7 @@
 
 class UTextBlock;
 class UVerticalBox;
-class UGraphDialogueComponent;
+class UDialogueComponent;
 class UDialogueChoiceWidget;
 
 /**
@@ -27,7 +27,7 @@ class BACHELORTHESIS_API UDialogueWidget : public UUserWidget
 	UVerticalBox* OptionPanel;
 
 	UPROPERTY()
-	UGraphDialogueComponent* OwningDialogueComponent;
+	UDialogueComponent* OwningDialogueComponent;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UDialogueChoiceWidget> DesiredChoiceWidget;
@@ -35,6 +35,6 @@ class BACHELORTHESIS_API UDialogueWidget : public UUserWidget
 public:
 	void UpdateWidget(const int32 DialogueIndex, const FText& CharacterName, const FText& Dialogue, const TArray<FText>& Choices) const;
 	
-	FORCEINLINE void SetOwningDialogueComponent(UGraphDialogueComponent* NewDialogueComponent) { OwningDialogueComponent = NewDialogueComponent; }
+	FORCEINLINE void SetOwningDialogueComponent(UDialogueComponent* NewDialogueComponent) { OwningDialogueComponent = NewDialogueComponent; }
 	
 };

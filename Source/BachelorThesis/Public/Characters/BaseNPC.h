@@ -11,7 +11,7 @@
 class UBaseInteractableComponent;
 class UWidgetComponent;
 class UTextRenderComponent;
-class UGraphDialogueComponent;
+class UDialogueComponent;
 
 UCLASS()
 class BACHELORTHESIS_API ABaseNPC : public ACharacter, public IInteractionInterface
@@ -28,7 +28,7 @@ class BACHELORTHESIS_API ABaseNPC : public ACharacter, public IInteractionInterf
 	UTextRenderComponent* NameComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category= "Defaults")
-	UGraphDialogueComponent* DialogueComponent;
+	UDialogueComponent* DialogueComponent;
 
 	UPROPERTY()
 	TObjectPtr<USkeletalMesh> SkeletalMesh;

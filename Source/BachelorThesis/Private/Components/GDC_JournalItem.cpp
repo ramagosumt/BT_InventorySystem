@@ -1,6 +1,6 @@
 #include "Components/GDC_JournalItem.h"
 
-void UGDC_JournalItem::ExecuteDialogue()
+/*void UGDC_JournalItem::ExecuteDialogue()
 {
 	switch (DialogueTreeBranch)
 	{
@@ -43,3 +43,4 @@ void UGDC_JournalItem::ExecuteDialogue()
 		break;
 	}
 }
+*/

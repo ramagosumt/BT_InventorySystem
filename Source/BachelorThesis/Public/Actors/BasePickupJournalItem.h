@@ -5,7 +5,7 @@
 #include "Interfaces/InteractionInterface.h"
 #include "BasePickupJournalItem.generated.h"
 
-class UGDC_JournalItem;
+class UDialogueComponent;
 class UBoxComponent;
 class UBaseInteractableComponent;
 class USphereComponent;
@@ -36,7 +36,7 @@ class BACHELORTHESIS_API ABasePickupJournalItem : public AActor, public IInterac
 	UBoxComponent* InteractionArea;
 
 	UPROPERTY(EditDefaultsOnly, Category= "Defaults")
-	UGDC_JournalItem* DialogueComponent;
+	UDialogueComponent* DialogueComponent;
 
 	UPROPERTY()
 	ABachelorThesisCharacter* CurrentInteractingActor;

@@ -4,7 +4,7 @@
 #include "Components/SphereComponent.h"
 #include "Components/BaseInteractableComponent.h"
 #include "Components/BoxComponent.h"
-#include "Components/GDC_JournalItem.h"
+#include "Components/DialogueComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Objects/BaseJournalItem.h"
 #include "UIs/InteractionButtonWidget.h"
@@ -33,7 +33,7 @@ ABasePickupJournalItem::ABasePickupJournalItem()
 	InteractionArea->SetupAttachment(GetRootComponent());
 	InteractionArea->ComponentTags.Add("InteractionArea");
 
-	DialogueComponent = CreateDefaultSubobject<UGDC_JournalItem>(TEXT("DialogueComponent"));
+	DialogueComponent = CreateDefaultSubobject<UDialogueComponent>(TEXT("DialogueComponent"));
 	DialogueComponent->OnDialogueEnd.AddUniqueDynamic(this, &ABasePickupJournalItem::OnDialogueEnd);
 }
 
@@ -75,7 +75,7 @@ void ABasePickupJournalItem::Interact(ABachelorThesisCharacter* PlayerCharacter)
 {
 	if (PlayerCharacter)
 	{
-		DialogueComponent->OpenConversation();
+		// DialogueComponent->OpenConversation();
 		WidgetComponent->SetHiddenInGame(true);
 		CurrentInteractingActor = PlayerCharacter;
 	}
