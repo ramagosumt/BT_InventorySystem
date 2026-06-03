@@ -1,5 +1,6 @@
 #include "BachelorThesis/Public/Frameworks/BachelorThesisGameMode.h"
 #include "BachelorThesis/Public/Characters/BachelorThesisCharacter.h"
+#include "Frameworks/MainGameState.h"
 #include "Frameworks/MainController.h"
 #include "Frameworks/MainHUD.h"
 #include "UObject/ConstructorHelpers.h"
@@ -14,4 +15,5 @@ ABachelorThesisGameMode::ABachelorThesisGameMode()
 
 	PlayerControllerClass = AMainController::StaticClass();
 	HUDClass = AMainHUD::StaticClass();
+	GameStateClass = AMainGameState::StaticClass();
 }
