@@ -6,6 +6,8 @@
 
 Amicus School of Engineering is a third-person interactive fiction RPG prototype built around reusable Unreal Engine C++ gameplay systems. The project began as a multi-paradigm inventory framework and expanded into a broader gameplay architecture supporting interaction, dialogue, item data, UI, time simulation, and future quest/NPC schedule systems.
 
+* **Video:** [BT Inventory Demo](https://youtu.be/pgI0CrLCkcg)
+
 ---
 
 ## Programming Portfolio Notes
