@@ -1,116 +1,281 @@
 # Amicus School of Engineering
-### An Interactive Fiction Adventure | Developed in Unreal Engine 5.6 - C++ Focus
 
-> *"Lupus solitarius perit dum grex vivit."*
+### An Interactive Fiction Adventure | Unreal Engine 5.6 | C++ Focus
 
-Follow 18-year-old Nathan Nguyen as he lives out his dream college experience at Amicus School of Engineering - through club activities, relationships, and truths hidden beneath the school's surface.
+*"Lupus solitarius perit dum grex vivit."*
 
----
-
-## Overview
-
-Amicus School of Engineering is a third-person interactive fiction adventure inspired by Yakuza 0's dense world design, Persona 5's day structure, and Control's layered environmental storytelling. The player explores a living college world, builds relationships, completes quests, and gradually uncovers the secrets beneath everyday campus life.
-
-This repository contains the core gameplay framework and vertical slice prototype, built entirely in Unreal Engine 5.6 with a C++ focus.
+Follow 18-year-old Nathan Nguyen as he lives out his dream college experience at Amicus School of Engineering through club activities, relationships, and truths hidden beneath the school's surface.
 
 ---
 
-## Current Systems
+# Programming Portfolio Notes
 
-### Interaction System
-- Trace-based interaction with hold duration support
-- Interface-driven architecture - any actor implementing `IInteractionInterface` is automatically interactable with zero changes to core systems
-- Focus/unfocus visual feedback via custom depth rendering
+This repository is submitted as a programming portfolio sample focused on Unreal Engine 5.6 C++ gameplay architecture.
 
-### Dialogue System
-- Data-table driven branching dialogue - no hardcoded conversation logic
-- Full branching, variable row selection, and loop support
-- Cinematic mode integration - pauses gameplay and UI during conversations
-- Choice-based dialogue with dynamic widget generation
+Developed independently as my bachelor thesis project, Amicus School of Engineering serves as a reusable gameplay systems framework for a larger interactive fiction RPG. While presented as a game prototype, the primary focus of this project is the design and implementation of extensible gameplay systems rather than content production.
 
-### Inventory System
-- Three inventory types: Grid, List, and Slot - each independently functional
-- Shared `BaseItemData` layer for normalized item identity across all inventory types
-- Pickup actors cleanly separated from item data objects (world representation vs data)
-- Journal and Quest item variants with dialogue integration on pickup
-
-### Time System *(In Progress)*
-- `CentralTimeComponent` hosted on `GameState` - globally accessible, no singleton abuse
-- Minute-by-minute simulation with configurable day length and time scale
-- Delegate broadcasts for `OnNewMinute`, `OnNewHour`, `OnNewDay` - any system can listen without coupling to time logic
-- Day/night cycle driven by timeline curves on a dedicated `CentralTimeManager` actor
-- `PauseTime` / `ResumeTime` support for dialogue and cinematic moments
-
-### Quest System *(Coming Soon)*
-- Data-driven quest structure with branching conditions
-- Inventory and dialogue state integration
-- Multi-objective support
-
-### NPC Schedule System *(Coming Soon)*
-- Time-window-based NPC availability
-- Location locking during scheduled activities
-- Foundation for relationship and routine systems
+For code reviewers, I recommend starting with the **Architecture Highlights** section and then using the **Code Review Guide** to navigate the source code.
 
 ---
 
-## Architecture Highlights
+# Why This Project
 
-- **Interface-driven interaction** - `IInteractionInterface` decouples all interactable actors from core systems. Adding a new interactable type requires zero changes to existing code.
-- **Data-table driven dialogue and items** - designers work in structured data tables, not C++ or Blueprint graphs.
-- **Component-based design** - systems are composable components, not monolithic classes.
-- **Clean separation of concerns** - world actors, data objects, UI widgets, and game systems are independently maintainable layers.
+I selected this repository as my primary programming portfolio piece because it demonstrates my approach to gameplay architecture in Unreal Engine C++.
 
----
+Rather than implementing isolated mechanics, I focused on building reusable systems that communicate through interfaces, delegates, components, and data-driven workflows. The project emphasizes extensibility, decoupling, maintainability, and long-term scalability.
 
-## Vertical Slice Goal
+Major systems personally designed and implemented include:
 
-A single playable school day representing the core experience:
-- Wake up and travel from dorm to class
-- Attend class with an interactive task
-- Explore campus and discover NPC schedules
-- Interact with a key character, receive a quest
-- Follow leads across campus locations
-- End-of-day resolution
+* Interface-driven interaction framework
+* Data-driven branching dialogue architecture
+* Multi-paradigm inventory framework (Grid, List, Slot)
+* Shared item data and pickup pipeline
+* Event-driven time simulation system
+* Runtime UI generation
+* Day/night cycle management
+* Cross-system communication through delegates and interfaces
 
 ---
 
-## Inspirations
+# Game Overview
 
-| System | Inspiration |
-|---|---|
-| World density | Yakuza 0 |
-| Day structure | Persona 5 |
-| School life | Bully, Yandere Simulator |
-| NPC identity | Watch Dogs 2 |
-| Narrative branching | AI: The Somnium Files |
-| Environmental mystery | Control |
-| Festivals and relationships | Stardew Valley |
+Set in a fictional urban city, Amicus School of Engineering is a third-person interactive fiction adventure inspired by:
 
----
+| System                    | Inspiration           |
+| ------------------------- | --------------------- |
+| World Density             | Yakuza 0              |
+| Day Structure             | Persona 5             |
+| School Life               | Bully                 |
+| NPC Identity              | Watch Dogs 2          |
+| Narrative Branching       | AI: The Somnium Files |
+| Environmental Mystery     | Control               |
+| Festivals & Relationships | Stardew Valley        |
 
-## Technical Stack
+Players explore a living college world, build relationships, complete quests, and gradually uncover the secrets hidden beneath everyday campus life.
 
-- **Engine:** Unreal Engine 5.6
-- **Language:** C++ (primary), Blueprint (prototyping only)
-- **Platform Target:** PC (Steam, Itch.io)
-- **Development:** Solo
+**Target Platform:** PC
 
----
+**Target Length:** 8-10 Hours
 
-## Development Status
+**Engine:** Unreal Engine 5.6
 
-Active development. Currently building toward a vertical slice prototype.
-
-| System | Status |
-|---|---|
-| Interaction | ✅ Complete |
-| Dialogue | ✅ Complete |
-| Inventory | ✅ Complete |
-| Time System | 🔄 In Progress |
-| Quest System | ⬜ Planned |
-| NPC Schedules | ⬜ Planned |
-| Vertical Slice Level | ⬜ Planned |
+**Language:** C++
 
 ---
 
-*Solo developed by [@ramagosumt](https://github.com/ramagosumt)*
+# Architecture Highlights
+
+## Interface-Driven Interaction
+
+`IInteractionInterface` fully decouples interactable actors from gameplay systems.
+
+Adding a new interactable object requires implementing the interface only. No changes are required to existing gameplay code.
+
+Benefits:
+
+* No cast chains
+* No concrete class dependencies
+* Extensible by design
+* Open for extension, closed for modification
+
+---
+
+## Data-Driven Systems
+
+Dialogue and item definitions are driven through `UDataTable` assets.
+
+Designers can create content without modifying C++ source code or Blueprint graphs.
+
+Benefits:
+
+* Fast iteration
+* Separation of code and content
+* Reduced maintenance cost
+
+---
+
+## Component-Based Design
+
+Gameplay systems are implemented as reusable `UActorComponent` modules.
+
+Examples:
+
+* Interaction Components
+* Dialogue Components
+* Inventory Components
+* Time Components
+
+Benefits:
+
+* Reusable behavior
+* Improved modularity
+* Reduced code duplication
+
+---
+
+## Event-Driven Time Simulation
+
+The time system communicates entirely through multicast delegates.
+
+Examples:
+
+* OnNewMinute
+* OnNewHour
+* OnMorning
+* OnEvening
+* OnNewDay
+
+Benefits:
+
+* Loose coupling
+* Reactive gameplay systems
+* Simplified future expansion
+
+---
+
+## Clean Data / World Separation
+
+World objects and inventory objects are intentionally separated.
+
+### World Representation
+
+* AActor Pickup Objects
+
+### Inventory Representation
+
+* UObject Item Instances
+* BaseItemData Definitions
+
+Benefits:
+
+* Cleaner ownership model
+* Easier serialization
+* Better scalability
+
+---
+
+# Build Instructions
+
+### Requirements
+
+* Unreal Engine 5.6
+* Visual Studio 2022
+
+### Setup
+
+1. Clone repository
+2. Right-click `BachelorThesis.uproject`
+3. Select **Generate Visual Studio Project Files**
+4. Open solution
+5. Build **Development Editor**
+6. Launch `BachelorThesis.uproject`
+
+---
+
+# Code Review Guide
+
+Recommended files for review are organized by system.
+
+---
+
+## Interaction System
+
+### Files
+
+* `Interfaces/InteractionInterface.h`
+* `Components/BaseInteractableComponent.h`
+* `Components/BaseInteractableComponent.cpp`
+* `Components/TraceInteractionComponent.cpp`
+
+### Concepts Demonstrated
+
+* Interface-driven architecture
+* Gameplay decoupling
+* Extensible interaction workflows
+* Reusable actor behavior
+
+---
+
+## Dialogue System
+
+### Files
+
+* `Components/DialogueComponent.h`
+* `Components/DialogueComponent.cpp`
+* `Data/DialogueData.h`
+* `UIs/DialogueWidget.cpp`
+* `UIs/DialogueChoiceWidget.cpp`
+
+### Concepts Demonstrated
+
+* Data-driven branching dialogue
+* Runtime UI generation
+* State-based conversation flow
+* Cinematic mode integration
+
+---
+
+## Inventory System
+
+### Files
+
+* `Components/GridInventoryComponent.h`
+* `Components/ListInventoryComponent.h`
+* `Components/SlotInventoryComponent.h`
+* `Data/BaseItemData.h`
+* `Objects/BaseItem.h`
+* `Actors/BasePickupItem.h`
+
+### Concepts Demonstrated
+
+* Object-oriented architecture
+* Multiple inventory paradigms
+* Shared item data layer
+* Data/world separation
+* Extensible inventory framework
+
+---
+
+## Time System
+
+### Files
+
+* `Components/CentralTimeComponent.h`
+* `Components/CentralTimeComponent.cpp`
+* `Actors/TimeManager.h`
+* `Actors/TimeManager.cpp`
+* `Frameworks/MainGameState.h`
+
+### Concepts Demonstrated
+
+* Event-driven simulation
+* Delegate-based communication
+* Global system coordination
+* Day/night cycle management
+* Time scaling and pausing
+
+---
+
+# Current Systems
+
+| System               | Status         |
+| -------------------- | -------------- |
+| Interaction          | ✅ Complete     |
+| Dialogue             | ✅ Complete     |
+| Inventory            | ✅ Complete     |
+| Time System          | ✅ Complete     |
+| Quest System         | 🔄 In Progress |
+| NPC Schedule System  | ⬜ Planned      |
+| Vertical Slice Level | ⬜ Planned      |
+
+---
+
+# Scope Note
+
+This project is an active gameplay framework and vertical slice prototype rather than a finished commercial game.
+
+Completed systems focus on reusable, extensible Unreal Engine C++ architecture. Remaining development is centered on quest progression, NPC scheduling, and content creation built on top of the existing framework.
+
+---
+
+Solo developed by **@ramagosumt**
