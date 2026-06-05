@@ -33,6 +33,7 @@ void UTraceInteractionComponent::CheckInteraction()
 		TArray<TEnumAsByte<EObjectTypeQuery>> ObjectTypesArray;
 		ObjectTypesArray.Add(UEngineTypes::ConvertToObjectType(ECC_InventoryItem));
 		ObjectTypesArray.Add(UEngineTypes::ConvertToObjectType(ECC_NPC));
+		ObjectTypesArray.Add(UEngineTypes::ConvertToObjectType(ECC_InteractableItem));
 
 		const TArray<AActor*, FDefaultAllocator> IgnoreActors;
 		FHitResult TraceHit;

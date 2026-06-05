@@ -63,8 +63,6 @@ void UCentralTimeComponent::AdvanceTime()
 			}
 		}
 	}
-	
-	UE_LOG(LogTemp, Warning, TEXT("The Current Time is: Month: %d Day: %d Hour: %d Minute: %d"), Months, Days, Hours, Minutes);
 }
 
 void UCentralTimeComponent::ExecuteCentralTimer()

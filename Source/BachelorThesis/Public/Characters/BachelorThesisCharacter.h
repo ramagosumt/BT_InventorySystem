@@ -18,7 +18,7 @@ class AGrid3DInventory;
 struct FInputActionValue;
 class UDataTable;
 
-#define ECC_InventoryItem ECC_GameTraceChannel1
+#define ECC_InventoryItem ECC_GameTraceChannel2
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 

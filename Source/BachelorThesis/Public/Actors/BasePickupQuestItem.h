@@ -11,7 +11,7 @@ class UWidgetComponent;
 class UDataTable;
 class UBaseQuestItem;
 
-#define ECC_InventoryItem ECC_GameTraceChannel1
+#define ECC_InventoryItem ECC_GameTraceChannel2
 
 UCLASS()
 class BACHELORTHESIS_API ABasePickupQuestItem : public AActor, public IInteractionInterface

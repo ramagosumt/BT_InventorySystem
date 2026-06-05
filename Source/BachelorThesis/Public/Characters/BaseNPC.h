@@ -6,7 +6,7 @@
 #include "Interfaces/InteractionInterface.h"
 #include "BaseNPC.generated.h"
 
-#define ECC_NPC ECC_GameTraceChannel2
+#define ECC_NPC ECC_GameTraceChannel3
 
 class UBaseInteractableComponent;
 class UWidgetComponent;
@@ -36,6 +36,7 @@ class BACHELORTHESIS_API ABaseNPC : public ACharacter, public IInteractionInterf
 public:
 	ABaseNPC();
 
+	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -56,8 +57,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category= "Defaults")
 	float InteractionDuration;
-	
-	virtual void BeginPlay() override;
 
 	void UpdateInteractionData();
 	

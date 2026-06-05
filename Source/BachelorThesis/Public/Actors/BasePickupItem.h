@@ -5,7 +5,7 @@
 #include "Interfaces/InteractionInterface.h"
 #include "BasePickupItem.generated.h"
 
-#define ECC_InventoryItem ECC_GameTraceChannel1
+#define ECC_InventoryItem ECC_GameTraceChannel2
 
 class UWidgetComponent;
 class UBaseInteractableComponent;

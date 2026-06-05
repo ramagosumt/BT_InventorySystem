@@ -13,7 +13,7 @@ class UWidgetComponent;
 class UDataTable;
 class UBaseJournalItem;
 
-#define ECC_InventoryItem ECC_GameTraceChannel1
+#define ECC_InventoryItem ECC_GameTraceChannel2
 
 UCLASS()
 class BACHELORTHESIS_API ABasePickupJournalItem : public AActor, public IInteractionInterface

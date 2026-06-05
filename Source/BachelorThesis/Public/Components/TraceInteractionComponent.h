@@ -4,8 +4,9 @@
 #include "Components/ActorComponent.h"
 #include "TraceInteractionComponent.generated.h"
 
-#define ECC_InventoryItem ECC_GameTraceChannel1
-#define ECC_NPC ECC_GameTraceChannel2
+#define ECC_InteractableItem ECC_GameTraceChannel1
+#define ECC_InventoryItem ECC_GameTraceChannel2
+#define ECC_NPC ECC_GameTraceChannel3
 
 class UInteractionButtonWidget;
 class IInteractionInterface;

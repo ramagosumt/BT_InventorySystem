@@ -9,6 +9,7 @@ class ABachelorThesisCharacter;
 UENUM()
 enum class EInteractionMode : uint8
 {
+	InteractableItem UMETA(DisplayName= "InteractableItem"),
 	InventoryItem UMETA(DisplayName= "InventoryItem"),
 	NPC UMETA(DisplayName= "NPC"),
 	Device UMETA(DisplayName= "Device"),

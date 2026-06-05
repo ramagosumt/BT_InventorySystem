@@ -64,16 +64,22 @@ void ABaseNPC::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ABaseNPC::BeginFocus()
 {
+	IInteractionInterface::BeginFocus();
+	
 	if (NameComponent) NameComponent->SetVisibility(true);
 }
 
 void ABaseNPC::EndFocus()
 {
+	IInteractionInterface::EndFocus();
+	
 	if (NameComponent) NameComponent->SetVisibility(false);
 }
 
 void ABaseNPC::Interact(ABachelorThesisCharacter* PlayerCharacter)
 {
+	IInteractionInterface::Interact(PlayerCharacter);
+	
 	if (DialogueComponent)
 	{
 		DialogueComponent->Interact(PlayerCharacter);

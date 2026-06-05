@@ -6,6 +6,18 @@ void UInteractionBarWidget::UpdateWidget(const FInteractionData& InteractionData
 {
 	switch (InteractionData.ItemInteractionMode)
 	{
+	case (EInteractionMode::InteractableItem):
+		if (InteractionData.Duration > 0.f)
+		{
+			InteractionText->SetText(FText::Format(FText::FromString("Hold E for {0}s to {1} {2}"), static_cast<int32>(InteractionData.Duration), InteractionData.Action, InteractionData.Name));
+		}
+		else
+		{
+			InteractionText->SetText(FText::Format(FText::FromString("Press E to {0} {1}"), InteractionData.Action, InteractionData.Name));
+		}
+		
+		break;
+		
 	case (EInteractionMode::InventoryItem):
 		if (InteractionData.Quantity < 2)
 		{
@@ -43,6 +55,7 @@ void UInteractionBarWidget::UpdateWidget(const FInteractionData& InteractionData
 		}
 		
 		break;
+		
 	case (EInteractionMode::Device):
 		break;
 	case (EInteractionMode::Toggle):

@@ -73,10 +73,12 @@ void ABasePickupJournalItem::EndFocus()
 
 void ABasePickupJournalItem::Interact(ABachelorThesisCharacter* PlayerCharacter)
 {
+	IInteractionInterface::Interact(PlayerCharacter);
+	
 	if (PlayerCharacter)
 	{
-		// DialogueComponent->OpenConversation();
-		WidgetComponent->SetHiddenInGame(true);
+		if (WidgetComponent) WidgetComponent->SetHiddenInGame(true);
+		if (DialogueComponent) DialogueComponent->Interact(PlayerCharacter);
 		CurrentInteractingActor = PlayerCharacter;
 	}
 }
@@ -114,6 +116,7 @@ void ABasePickupJournalItem::UpdateInteractionData()
 
 void ABasePickupJournalItem::ObtainedBy(const ABachelorThesisCharacter* Taker)
 {
+	UE_LOG(LogTemp, Warning, TEXT("This too"))
 	if (!IsPendingKillPending())
 	{
 		if (ItemReference)
@@ -122,6 +125,8 @@ void ABasePickupJournalItem::ObtainedBy(const ABachelorThesisCharacter* Taker)
 			{
 				ListInventory->AddItem(ItemReference);
 				Destroy();
+				
+				UE_LOG(LogTemp, Warning, TEXT("This works as well."))
 			}
 		}
 	}

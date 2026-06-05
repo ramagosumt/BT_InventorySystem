@@ -19,6 +19,8 @@ class BACHELORTHESIS_API UBaseInteractableComponent : public UActorComponent, pu
 
 public:	
 	UBaseInteractableComponent();
+	
+	virtual void BeginPlay() override;
 
 	bool IsFocusable(const AActor* ActorToFocus) const;
 	FInteractionData GetOwnerInteractionData() const;
@@ -34,8 +36,6 @@ public:
 	FORCEINLINE void SetIsInBoxNeeded(const bool NewCondition) { IsInBoxNeeded = NewCondition; }
 
 protected:
-	virtual void BeginPlay() override;
-
 	UFUNCTION()
 	void OnInteractionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
 
