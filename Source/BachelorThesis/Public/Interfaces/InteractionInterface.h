@@ -9,8 +9,8 @@ class ABachelorThesisCharacter;
 UENUM()
 enum class EInteractionMode : uint8
 {
-	InteractableItem UMETA(DisplayName= "InteractableItem"),
-	InventoryItem UMETA(DisplayName= "InventoryItem"),
+	Item_Interactable UMETA(DisplayName= "Item_Interactable"),
+	Item_Pickupable UMETA(DisplayName= "Item_Pickupable"),
 	NPC UMETA(DisplayName= "NPC"),
 	Device UMETA(DisplayName= "Device"),
 	Toggle UMETA(DisplayName= "Toggle"),
@@ -23,7 +23,7 @@ struct FInteractionData
 	GENERATED_BODY()
 
 	FInteractionData() :
-	ItemInteractionMode(EInteractionMode::InventoryItem),
+	ItemInteractionMode(EInteractionMode::Item_Pickupable),
 	Name(FText::GetEmpty()),
 	Action(FText::GetEmpty()),
 	Quantity(0),

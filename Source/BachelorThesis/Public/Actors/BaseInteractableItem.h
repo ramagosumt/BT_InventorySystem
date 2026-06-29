@@ -8,8 +8,8 @@
 #define ECC_InteractableItem ECC_GameTraceChannel1
 
 class USphereComponent;
-class UWidgetComponent;
 class UBaseInteractableComponent;
+class UWidgetComponent;
 
 UCLASS()
 class BACHELORTHESIS_API ABaseInteractableItem : public AActor, public IInteractionInterface
@@ -28,7 +28,6 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	
-private:
 	UPROPERTY(EditDefaultsOnly, Category= "Defaults")
 	UStaticMeshComponent* Mesh;
 	
@@ -41,11 +40,17 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category= "Defaults")
 	UWidgetComponent* WidgetComponent;
 	
-	UPROPERTY(EditAnywhere, Category= "Defaults")
-	float InteractionDuration;
-	
 	UPROPERTY(VisibleInstanceOnly, Category= "Defaults")
 	FInteractionData ItemInteractionData;
 	
-	void UpdateInteractionData();
+	UPROPERTY(EditDefaultsOnly, Category= "Interaction")
+	FText InteractionAction;
+
+	UPROPERTY(EditDefaultsOnly, Category= "Interaction")
+	FText InteractionName;
+	
+	UPROPERTY(EditDefaultsOnly, Category= "Interaction")
+	float InteractionDuration;
+	
+	virtual void UpdateInteractionData();
 };

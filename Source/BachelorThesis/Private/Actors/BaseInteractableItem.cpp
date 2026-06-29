@@ -55,7 +55,7 @@ void ABaseInteractableItem::EndFocus()
 
 void ABaseInteractableItem::Interact(ABachelorThesisCharacter* PlayerCharacter)
 {
-	IInteractionInterface::Interact(PlayerCharacter);
+	IInteractionInterface::Interact(PlayerCharacter);	
 	
 	if (PlayerCharacter)
 	{
@@ -65,9 +65,9 @@ void ABaseInteractableItem::Interact(ABachelorThesisCharacter* PlayerCharacter)
 
 void ABaseInteractableItem::UpdateInteractionData()
 {
-	ItemInteractionData.ItemInteractionMode = EInteractionMode::InteractableItem;
-	ItemInteractionData.Action = FText::FromString("interact with");
-	ItemInteractionData.Name = FText::FromString("item");
+	ItemInteractionData.ItemInteractionMode = EInteractionMode::Item_Interactable;
+	ItemInteractionData.Action = InteractionAction;
+	ItemInteractionData.Name = InteractionName;
 	ItemInteractionData.Duration = InteractionDuration;
 	
 	InteractionData = ItemInteractionData;

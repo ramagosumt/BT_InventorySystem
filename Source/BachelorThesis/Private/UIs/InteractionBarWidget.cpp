@@ -6,7 +6,7 @@ void UInteractionBarWidget::UpdateWidget(const FInteractionData& InteractionData
 {
 	switch (InteractionData.ItemInteractionMode)
 	{
-	case (EInteractionMode::InteractableItem):
+	case (EInteractionMode::Item_Interactable):
 		if (InteractionData.Duration > 0.f)
 		{
 			InteractionText->SetText(FText::Format(FText::FromString("Hold E for {0}s to {1} {2}"), static_cast<int32>(InteractionData.Duration), InteractionData.Action, InteractionData.Name));
@@ -18,7 +18,7 @@ void UInteractionBarWidget::UpdateWidget(const FInteractionData& InteractionData
 		
 		break;
 		
-	case (EInteractionMode::InventoryItem):
+	case (EInteractionMode::Item_Pickupable):
 		if (InteractionData.Quantity < 2)
 		{
 			if (InteractionData.Duration > 0.f)

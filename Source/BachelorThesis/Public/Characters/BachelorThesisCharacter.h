@@ -93,6 +93,12 @@ class ABachelorThesisCharacter : public ACharacter
 	
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FName> QuestItemIDs;
+	
+	UPROPERTY(EditDefaultsOnly)
+	UAnimMontage* SitDownMontage;
+	
+	UPROPERTY(EditDefaultsOnly)
+	UAnimMontage* StandUpMontage;
 
 	void InitializeInventories();
 	void InitializeQuestInventory();
@@ -109,6 +115,8 @@ public:
 	void BeginInteract();
 	void EndInteract();
 	void ResetInteract();
+	
+	void PlayAnimation(FText Text);
 
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }

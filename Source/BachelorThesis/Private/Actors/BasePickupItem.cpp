@@ -93,7 +93,7 @@ void ABasePickupItem::InitializeItem(const TSubclassOf<UBaseItem>& BaseClass, co
 
 void ABasePickupItem::UpdateInteractionData()
 {
-	ItemInteractionData.ItemInteractionMode = EInteractionMode::InventoryItem;
+	ItemInteractionData.ItemInteractionMode = EInteractionMode::Item_Pickupable;
 	ItemInteractionData.Action = ItemReference->GetItemTextData().InteractionText;
 	ItemInteractionData.Name = ItemReference->GetItemTextData().Name;
 	ItemInteractionData.Quantity = ItemReference->GetItemQuantity();

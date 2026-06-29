@@ -90,7 +90,7 @@ void ABasePickupQuestItem::InitializeItem(const TSubclassOf<UBaseQuestItem>& Bas
 
 void ABasePickupQuestItem::UpdateInteractionData()
 {
-	ItemInteractionData.ItemInteractionMode = EInteractionMode::InventoryItem;
+	ItemInteractionData.ItemInteractionMode = EInteractionMode::Item_Pickupable;
 	ItemInteractionData.Action = ItemReference->GetItemTextData().InteractionText;
 	ItemInteractionData.Name = ItemReference->GetItemTextData().Name;
 	ItemInteractionData.Duration = InteractionDuration;

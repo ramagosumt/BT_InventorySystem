@@ -261,6 +261,17 @@ void ABachelorThesisCharacter::ResetInteract()
 	if (TraceInteraction) TraceInteraction->ResetInteraction();
 }
 
+void ABachelorThesisCharacter::PlayAnimation(FText Text)
+{
+	if (Text.EqualToCaseIgnored(FText::FromString("Sit")))
+	{
+		PlayAnimMontage(SitDownMontage);
+	} else if (Text.EqualToCaseIgnored(FText::FromString("Stand")))
+	{
+		PlayAnimMontage(StandUpMontage);
+	}
+}
+
 void ABachelorThesisCharacter::InitializeInventories()
 {
 	InitializeQuestInventory();
