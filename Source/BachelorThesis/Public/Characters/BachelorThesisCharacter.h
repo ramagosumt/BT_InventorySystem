@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interfaces/AnimationInterface.h"
 #include "Logging/LogMacros.h"
 #include "BachelorThesisCharacter.generated.h"
 
@@ -23,7 +24,7 @@ class UDataTable;
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config=Game)
-class ABachelorThesisCharacter : public ACharacter
+class ABachelorThesisCharacter : public ACharacter, public IAnimationInterface
 {
 	GENERATED_BODY()
 	
@@ -116,7 +117,8 @@ public:
 	void EndInteract();
 	void ResetInteract();
 	
-	void PlayAnimation(FText Text);
+	void PlayAnimation(FText Text, USkeletalMeshComponent* Animation, FVector Location);
+	virtual void BeginAnimation(USkeletalMeshComponent* Animation, FVector Location) override;
 
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }

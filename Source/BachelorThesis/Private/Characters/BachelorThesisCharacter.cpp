@@ -17,6 +17,8 @@
 #include "Objects/BaseItem.h"
 #include "Objects/BaseJournalItem.h"
 #include "Objects/BaseQuestItem.h"
+#include "AIController.h"
+#include "Frameworks/MovementController.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -77,6 +79,8 @@ ABachelorThesisCharacter::ABachelorThesisCharacter()
 	TraceInteraction->SetTraceDistance(InteractionCheckDistance);
 
 	DesiredInventoryData = ConstructorHelpers::FObjectFinder<UDataTable> (TEXT("/Game/Rama_InventorySystem/Data/DT_BaseItem")).Object;
+	
+	AIControllerClass = AMovementController::StaticClass();
 }
 
 void ABachelorThesisCharacter::BeginPlay()
@@ -261,15 +265,26 @@ void ABachelorThesisCharacter::ResetInteract()
 	if (TraceInteraction) TraceInteraction->ResetInteraction();
 }
 
-void ABachelorThesisCharacter::PlayAnimation(FText Text)
+void ABachelorThesisCharacter::PlayAnimation(FText Text, USkeletalMeshComponent* Animation, FVector Location)
 {
 	if (Text.EqualToCaseIgnored(FText::FromString("Sit")))
 	{
 		PlayAnimMontage(SitDownMontage);
-	} else if (Text.EqualToCaseIgnored(FText::FromString("Stand")))
+		BeginAnimation(Animation, Location);
+	} 
+	else if (Text.EqualToCaseIgnored(FText::FromString("Stand")))
 	{
 		PlayAnimMontage(StandUpMontage);
+		//BeginAnimation(Animation, Location);
 	}
+}
+
+void ABachelorThesisCharacter::BeginAnimation(USkeletalMeshComponent* Animation, FVector Location)
+{
+	if (AController* CurrentController = GetController()) CurrentController->UnPossess();
+	
+	SpawnDefaultController();
+	if (AAIController* AIController = Cast<AAIController>(GetController())) AIController->MoveToLocation(Location);
 }
 
 void ABachelorThesisCharacter::InitializeInventories()

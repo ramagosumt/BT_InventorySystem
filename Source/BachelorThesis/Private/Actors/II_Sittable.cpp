@@ -1,5 +1,6 @@
 #include "Actors/II_Sittable.h"
 #include "Characters/BachelorThesisCharacter.h"
+#include "Components/CapsuleComponent.h"
 
 AII_Sittable::AII_Sittable()
 {
@@ -19,11 +20,23 @@ void AII_Sittable::Interact(ABachelorThesisCharacter* PlayerCharacter)
 void AII_Sittable::SitDown(ABachelorThesisCharacter* PlayerCharacter)
 {
 	bIsBeingSatOn = true;
-	if (PlayerCharacter) PlayerCharacter->PlayAnimation(FText::FromString("Sit"));
+	if (PlayerCharacter)
+	{
+		USkeletalMeshComponent* SkeletalMesh = GetComponentByClass<USkeletalMeshComponent>();
+		UCapsuleComponent* Capsule = GetComponentByClass<UCapsuleComponent>();
+		
+		PlayerCharacter->PlayAnimation(FText::FromString("Sit"), SkeletalMesh, Capsule->GetComponentLocation());
+	}
 }
 
 void AII_Sittable::StandUp(ABachelorThesisCharacter* PlayerCharacter)
 {
 	bIsBeingSatOn = false;
-	if (PlayerCharacter) PlayerCharacter->PlayAnimation(FText::FromString("Stand"));
+	if (PlayerCharacter)
+	{
+		USkeletalMeshComponent* SkeletalMesh = GetComponentByClass<USkeletalMeshComponent>();
+		UCapsuleComponent* Capsule = GetComponentByClass<UCapsuleComponent>();
+		
+		PlayerCharacter->PlayAnimation(FText::FromString("Stand"), SkeletalMesh, Capsule->GetComponentLocation());
+	}
 }
