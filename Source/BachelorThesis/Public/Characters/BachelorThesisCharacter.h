@@ -100,6 +100,8 @@ class ABachelorThesisCharacter : public ACharacter, public IAnimationInterface
 	
 	UPROPERTY(EditDefaultsOnly)
 	UAnimMontage* StandUpMontage;
+	
+	bool bIsSitting;
 
 	void InitializeInventories();
 	void InitializeQuestInventory();
@@ -117,7 +119,7 @@ public:
 	void EndInteract();
 	void ResetInteract();
 	
-	void PlayAnimation(FText Text, USkeletalMeshComponent* Animation, FVector Location);
+	void PlayAnimation(FText Text);
 	virtual void BeginAnimation(USkeletalMeshComponent* Animation, FVector Location) override;
 
 	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -128,7 +130,11 @@ public:
 	FORCEINLINE UListInventoryComponent* GetListInventory() const { return ListInventory; }
 	FORCEINLINE AMainHUD* GetMainHUD() const { return MainHUD; }
 	
+	UFUNCTION(BlueprintCallable)
+	bool IsSitting() const { return bIsSitting; }
+	
 	FORCEINLINE void SetIsInteracting(const bool NewState) { bIsInteracting = NewState; }
+	FORCEINLINE void SetIsSitting(const bool NewState) { bIsSitting = NewState; }
 
 protected:
 

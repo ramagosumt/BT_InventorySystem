@@ -3,7 +3,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Interfaces/InteractionInterface.h"
-#include "BaseInteractableItem.generated.h"
+#include "Item_Interactable_Root.generated.h"
 
 #define ECC_InteractableItem ECC_GameTraceChannel1
 
@@ -12,12 +12,12 @@ class UBaseInteractableComponent;
 class UWidgetComponent;
 
 UCLASS()
-class BACHELORTHESIS_API ABaseInteractableItem : public AActor, public IInteractionInterface
+class BACHELORTHESIS_API AItem_Interactable_Root : public AActor, public IInteractionInterface
 {
 	GENERATED_BODY()
 	
 public:	
-	ABaseInteractableItem();
+	AItem_Interactable_Root();
 	
 	virtual void Tick(float DeltaTime) override;
 	

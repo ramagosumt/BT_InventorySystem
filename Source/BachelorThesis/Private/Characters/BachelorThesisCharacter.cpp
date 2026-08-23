@@ -265,12 +265,13 @@ void ABachelorThesisCharacter::ResetInteract()
 	if (TraceInteraction) TraceInteraction->ResetInteraction();
 }
 
-void ABachelorThesisCharacter::PlayAnimation(FText Text, USkeletalMeshComponent* Animation, FVector Location)
+void ABachelorThesisCharacter::PlayAnimation(FText Text)
 {
 	if (Text.EqualToCaseIgnored(FText::FromString("Sit")))
 	{
 		PlayAnimMontage(SitDownMontage);
-		BeginAnimation(Animation, Location);
+		
+		// BeginAnimation(Animation, Location);
 	} 
 	else if (Text.EqualToCaseIgnored(FText::FromString("Stand")))
 	{
@@ -281,10 +282,10 @@ void ABachelorThesisCharacter::PlayAnimation(FText Text, USkeletalMeshComponent*
 
 void ABachelorThesisCharacter::BeginAnimation(USkeletalMeshComponent* Animation, FVector Location)
 {
-	if (AController* CurrentController = GetController()) CurrentController->UnPossess();
+	//if (AController* CurrentController = GetController()) CurrentController->UnPossess();
 	
-	SpawnDefaultController();
-	if (AAIController* AIController = Cast<AAIController>(GetController())) AIController->MoveToLocation(Location);
+	//SpawnDefaultController();
+	//if (AAIController* AIController = Cast<AAIController>(GetController())) AIController->MoveToLocation(Location);
 }
 
 void ABachelorThesisCharacter::InitializeInventories()

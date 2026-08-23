@@ -1,11 +1,14 @@
-#include "Actors/II_Sittable.h"
+#include "Actors/Item_Interactable_Seat.h"
 #include "Characters/BachelorThesisCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Kismet/KismetSystemLibrary.h"
 
-AII_Sittable::AII_Sittable()
+AItem_Interactable_Seat::AItem_Interactable_Seat()
 {
+	SitLocation = CreateDefaultSubobject<USceneComponent>(TEXT("SitLocation"));
+	SitLocation->SetupAttachment(GetRootComponent());
+	SitLocation->SetRelativeLocation(FVector(40.f, 0.0f, 14.f));
+	
 	StandLocation = CreateDefaultSubobject<USceneComponent>(TEXT("StandLocation"));
 	StandLocation->SetupAttachment(GetRootComponent());
 	StandLocation->SetRelativeLocation(FVector(90.f, 0.0f, 0.0f));
@@ -15,7 +18,7 @@ AII_Sittable::AII_Sittable()
 	InteractionDuration = 1.f;
 }
 
-void AII_Sittable::Interact(ABachelorThesisCharacter* PlayerCharacter)
+void AItem_Interactable_Seat::Interact(ABachelorThesisCharacter* PlayerCharacter)
 {
 	Super::Interact(PlayerCharacter);
 		
@@ -23,7 +26,7 @@ void AII_Sittable::Interact(ABachelorThesisCharacter* PlayerCharacter)
 		else StandUp(PlayerCharacter);
 }
 
-void AII_Sittable::SitDown(ABachelorThesisCharacter* PlayerCharacter)
+void AItem_Interactable_Seat::SitDown(ABachelorThesisCharacter* PlayerCharacter)
 {
 	bIsBeingSatOn = true;
 	
@@ -31,7 +34,7 @@ void AII_Sittable::SitDown(ABachelorThesisCharacter* PlayerCharacter)
 	{
 		PlayerCharacter->SetIsSitting(true);
 		
-		const FVector NewLocation(GetActorLocation().X, GetActorLocation().Y, GetActorLocation().Z + PlayerCharacter->GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight());
+		const FVector NewLocation(SitLocation->GetComponentLocation());
 		const FRotator NewRotation(0.f, GetActorRotation().Yaw, 0.f);
 		
 		// PlayerCharacter->GetCharacterMovement()->DisableMovement();
@@ -43,7 +46,7 @@ void AII_Sittable::SitDown(ABachelorThesisCharacter* PlayerCharacter)
 	}
 }
 
-void AII_Sittable::StandUp(ABachelorThesisCharacter* PlayerCharacter)
+void AItem_Interactable_Seat::StandUp(ABachelorThesisCharacter* PlayerCharacter)
 {
 	bIsBeingSatOn = false;
 	
@@ -51,13 +54,10 @@ void AII_Sittable::StandUp(ABachelorThesisCharacter* PlayerCharacter)
 	{
 		PlayerCharacter->SetIsSitting(false);
 		
-		if (StandLocation)
-		{
-			const FVector NewLocation(StandLocation->GetComponentLocation().X, StandLocation->GetComponentLocation().Y, StandLocation->GetComponentLocation().Z + PlayerCharacter->GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight());
-			const FRotator NewRotation(0.f, GetActorRotation().Yaw, 0.f);
+		const FVector NewLocation(StandLocation->GetComponentLocation().X, StandLocation->GetComponentLocation().Y, StandLocation->GetComponentLocation().Z + PlayerCharacter->GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight());
+		const FRotator NewRotation(0.f, GetActorRotation().Yaw, 0.f);
 			
-			PlayerCharacter->SetActorLocation(NewLocation);
-			PlayerCharacter->SetActorRotation(NewRotation);
-		}
+		PlayerCharacter->SetActorLocation(NewLocation);
+		PlayerCharacter->SetActorRotation(NewRotation);
 	}
 }

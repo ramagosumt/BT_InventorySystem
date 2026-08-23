@@ -1,10 +1,10 @@
-#include "Actors/BaseInteractableItem.h"
+#include "Actors/Item_Interactable_Root.h"
 #include "Components/SphereComponent.h"
 #include "Components/WidgetComponent.h"
 #include "Components/BaseInteractableComponent.h"
 #include "UIs/InteractionButtonWidget.h"
 
-ABaseInteractableItem::ABaseInteractableItem()
+AItem_Interactable_Root::AItem_Interactable_Root()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	
@@ -26,34 +26,34 @@ ABaseInteractableItem::ABaseInteractableItem()
 	WidgetComponent->SetHiddenInGame(true);
 }
 
-void ABaseInteractableItem::BeginPlay()
+void AItem_Interactable_Root::BeginPlay()
 {
 	Super::BeginPlay();
 	
 	UpdateInteractionData();
 }
 
-void ABaseInteractableItem::Tick(float DeltaTime)
+void AItem_Interactable_Root::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 }
 
-void ABaseInteractableItem::BeginFocus()
+void AItem_Interactable_Root::BeginFocus()
 {
 	IInteractionInterface::BeginFocus();
 	
 	if (Mesh) Mesh->SetRenderCustomDepth(true);
 }
 
-void ABaseInteractableItem::EndFocus()
+void AItem_Interactable_Root::EndFocus()
 {
 	IInteractionInterface::EndFocus();
 	
 	if (Mesh) Mesh->SetRenderCustomDepth(false);
 }
 
-void ABaseInteractableItem::Interact(ABachelorThesisCharacter* PlayerCharacter)
+void AItem_Interactable_Root::Interact(ABachelorThesisCharacter* PlayerCharacter)
 {
 	IInteractionInterface::Interact(PlayerCharacter);	
 	
@@ -63,7 +63,7 @@ void ABaseInteractableItem::Interact(ABachelorThesisCharacter* PlayerCharacter)
 	}
 }
 
-void ABaseInteractableItem::UpdateInteractionData()
+void AItem_Interactable_Root::UpdateInteractionData()
 {
 	ItemInteractionData.ItemInteractionMode = EInteractionMode::Item_Interactable;
 	ItemInteractionData.Action = InteractionAction;
