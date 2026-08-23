@@ -18,6 +18,9 @@ public:
 	virtual void Interact(ABachelorThesisCharacter* PlayerCharacter) override;
 	
 private:
+	UPROPERTY(EditDefaultsOnly, Category= "Defaults")
+	USceneComponent* StandLocation;
+	
 	bool bIsBeingSatOn;
 	
 	void SitDown(ABachelorThesisCharacter* PlayerCharacter);
