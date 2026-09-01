@@ -7,7 +7,7 @@ AItem_Interactable_Seat::AItem_Interactable_Seat()
 {
 	SitLocation = CreateDefaultSubobject<USceneComponent>(TEXT("SitLocation"));
 	SitLocation->SetupAttachment(GetRootComponent());
-	SitLocation->SetRelativeLocation(FVector(40.f, 0.0f, 14.f));
+	SitLocation->SetRelativeLocation(FVector(30.f, 0.0f, 0.f));
 	
 	StandLocation = CreateDefaultSubobject<USceneComponent>(TEXT("StandLocation"));
 	StandLocation->SetupAttachment(GetRootComponent());
@@ -41,6 +41,8 @@ void AItem_Interactable_Seat::SitDown(ABachelorThesisCharacter* PlayerCharacter)
 		// PlayerCharacter->bUseControllerRotationYaw = false;
 		// PlayerCharacter->GetCharacterMovement()->bOrientRotationToMovement = false;
 
+		Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		
 		PlayerCharacter->SetActorLocation(NewLocation);
 		PlayerCharacter->SetActorRotation(NewRotation);
 	}
@@ -56,7 +58,9 @@ void AItem_Interactable_Seat::StandUp(ABachelorThesisCharacter* PlayerCharacter)
 		
 		const FVector NewLocation(StandLocation->GetComponentLocation().X, StandLocation->GetComponentLocation().Y, StandLocation->GetComponentLocation().Z + PlayerCharacter->GetCapsuleComponent()->GetUnscaledCapsuleHalfHeight());
 		const FRotator NewRotation(0.f, GetActorRotation().Yaw, 0.f);
-			
+		
+		Mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		
 		PlayerCharacter->SetActorLocation(NewLocation);
 		PlayerCharacter->SetActorRotation(NewRotation);
 	}

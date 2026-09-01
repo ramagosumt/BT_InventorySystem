@@ -1,6 +1,6 @@
 #include "Components/DialogueComponent.h"
 #include "Frameworks/MainHUD.h"
-#include "Characters/BaseNPC.h"
+#include "Characters/AIAS_NPC.h"
 #include "Kismet/GameplayStatics.h"
 #include "UIs/DialogueWidget.h"
 
@@ -96,8 +96,8 @@ void UDialogueComponent::HandleCinematic(const bool bCinematicMode) const {
 			MainHUD->SetCinematicMode(bCinematicMode);
 		}
 
-		if (const ABaseNPC* Owner = Cast<ABaseNPC>(GetOwner()))
-			bCinematicMode ? Owner->HideWidgetComponent() : Owner->ShowWidgetComponent();
+		if (const AAIAS_NPC* Owner = Cast<AAIAS_NPC>(GetOwner()))
+			bCinematicMode ? Owner->HideInteractionWidget() : Owner->ShowInteractionWidget();
 	}
 }
 

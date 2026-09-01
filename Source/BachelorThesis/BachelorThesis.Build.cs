@@ -8,6 +8,6 @@ public class BachelorThesis : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG", "ProceduralMeshComponent", "AIModule" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "UMG", "ProceduralMeshComponent", "AIModule", "StateTreeModule", "GameplayStateTreeModule", "StateTreeEditorModule", "PropertyBindingUtils", "NavigationSystem", "GameplayTags" });
 	}
 }
