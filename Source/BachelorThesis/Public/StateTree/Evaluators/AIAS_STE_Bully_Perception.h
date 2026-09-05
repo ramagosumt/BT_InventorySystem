@@ -57,20 +57,30 @@ private:
 	UPROPERTY()
 	TObjectPtr<AAIAS_AIC_Bully> OwnerController = nullptr;
 	
-	// ===== Perception =====
+	// ===== Focused Perception =====
 	
 	UPROPERTY()
-	TObjectPtr<UAIPerceptionComponent> PerceptionComponent = nullptr;
+	TObjectPtr<UAIPerceptionComponent> FocusedPerceptionComponent = nullptr;
 	
 	UFUNCTION()
-	void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
+	void OnFocusedTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 
 	UFUNCTION()
-	void OnTargetPerceptionForgotten(AActor* Actor);
+	void OnFocusedTargetPerceptionForgotten(AActor* Actor);
 	
-	void ReceiveSightStimulus(AActor* Actor);
+	void ReceiveFocusedSightStimulus(AActor* Actor);
 	void ReceivePredictionStimulus(AActor* Actor, const FAIStimulus& Stimulus);
 	
+	// ===== Acquisition Perception =====
+	
+	UPROPERTY()
+	TObjectPtr<UAIPerceptionComponent> PeripheralPerceptionComponent = nullptr;
+	
+	UPROPERTY()
+	TObjectPtr<UAIPerceptionComponent> ProximityPerceptionComponent = nullptr;
+	
+	UFUNCTION()
+	void OnTargetAcquisitionPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 	
 	// ===== Target =====
 

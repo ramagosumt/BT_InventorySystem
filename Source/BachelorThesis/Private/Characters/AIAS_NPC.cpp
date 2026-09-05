@@ -1,6 +1,7 @@
 #include "Characters/AIAS_NPC.h"
 
 #include "Components/BaseInteractableComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/DialogueComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "Components/WidgetComponent.h"
@@ -28,6 +29,9 @@ AAIAS_NPC::AAIAS_NPC()
 	GetMesh()->SetRelativeLocation(FVector(0.f, 0.f, -90.f));
 	GetMesh()->SetRelativeRotation(FRotator(0.f, -90.f, 0.f));
 	GetMesh()->SetCollisionObjectType(ECollisionChannel::ECC_NPC);
+	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 	
 	AIControllerClass = AAIAS_AIC::StaticClass();
 	

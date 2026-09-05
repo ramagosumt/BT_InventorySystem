@@ -18,15 +18,37 @@ class BACHELORTHESIS_API AAIAS_AIC_Bully : public AAIAS_AIC
 public:
 	AAIAS_AIC_Bully();
 	
-private:
-	
 	// ===== Perception =====
+	
+	UAIPerceptionComponent* GetFocusedPerceptionComponent() const;
+	UAIPerceptionComponent* GetPeripheralPerceptionComponent() const;
+	UAIPerceptionComponent* GetProximityPerceptionComponent() const;
+	
+private:
+	// ===== Focused Perception =====
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AIAS|Components", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UAIPerceptionComponent> AIPerceptionComponent;
+	TObjectPtr<UAIPerceptionComponent> FocusedAIPerceptionComponent;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AIAS|Perception", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UAISenseConfig_Sight> SightConfig;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AIAS|Perception|Focused", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAISenseConfig_Sight> FocusedSightConfig;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AIAS|Perception", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AIAS|Perception|Focused", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAISenseConfig_Prediction> PredictionConfig;
+	
+	// ===== Peripheral Perception =====
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AIAS|Components", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAIPerceptionComponent> PeripheralAIPerceptionComponent;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AIAS|Perception|Peripheral", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAISenseConfig_Sight> PeripheralSightConfig;
+	
+	// ===== Proximity Perception =====
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AIAS|Components", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAIPerceptionComponent> ProximityAIPerceptionComponent;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "AIAS|Perception|Proximity", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAISenseConfig_Sight> ProximitySightConfig;
 };

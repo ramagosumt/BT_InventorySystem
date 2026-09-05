@@ -30,27 +30,52 @@ void UAIAS_STE_Bully_Perception::TreeStart(FStateTreeExecutionContext& Context)
 		return;
 	}
 
-	PerceptionComponent = OwnerController->GetAIPerceptionComponent();
-	if (!PerceptionComponent)
+	FocusedPerceptionComponent = OwnerController->GetFocusedPerceptionComponent();
+	if (!FocusedPerceptionComponent)
 	{
 		return;
 	}
 	
-	PerceptionComponent->OnTargetPerceptionUpdated.AddUniqueDynamic(this, &UAIAS_STE_Bully_Perception::OnTargetPerceptionUpdated);
-	PerceptionComponent->OnTargetPerceptionForgotten.AddUniqueDynamic(this, &UAIAS_STE_Bully_Perception::OnTargetPerceptionForgotten);
+	PeripheralPerceptionComponent = OwnerController->GetPeripheralPerceptionComponent();
+	if (!PeripheralPerceptionComponent)
+	{
+		return;
+	}
+	
+	ProximityPerceptionComponent = OwnerController->GetProximityPerceptionComponent();
+	if (!ProximityPerceptionComponent)
+	{
+		return;
+	}
+	
+	FocusedPerceptionComponent->OnTargetPerceptionUpdated.AddUniqueDynamic(this, &UAIAS_STE_Bully_Perception::OnFocusedTargetPerceptionUpdated);
+	FocusedPerceptionComponent->OnTargetPerceptionForgotten.AddUniqueDynamic(this, &UAIAS_STE_Bully_Perception::OnFocusedTargetPerceptionForgotten);
+	PeripheralPerceptionComponent->OnTargetPerceptionUpdated.AddUniqueDynamic(this, &UAIAS_STE_Bully_Perception::OnTargetAcquisitionPerceptionUpdated);
+	ProximityPerceptionComponent->OnTargetPerceptionUpdated.AddUniqueDynamic(this, &UAIAS_STE_Bully_Perception::OnTargetAcquisitionPerceptionUpdated);
 }
 
 void UAIAS_STE_Bully_Perception::TreeStop(FStateTreeExecutionContext& Context)
 {
 	Super::TreeStop(Context);
 	
-	if (PerceptionComponent)
+	if (ProximityPerceptionComponent)
 	{
-		PerceptionComponent->OnTargetPerceptionUpdated.RemoveDynamic(this, &UAIAS_STE_Bully_Perception::OnTargetPerceptionUpdated);
-		PerceptionComponent->OnTargetPerceptionForgotten.RemoveDynamic(this, &UAIAS_STE_Bully_Perception::OnTargetPerceptionForgotten);
+		ProximityPerceptionComponent->OnTargetPerceptionUpdated.RemoveDynamic(this, &UAIAS_STE_Bully_Perception::OnTargetAcquisitionPerceptionUpdated);
 	}
 	
-	PerceptionComponent = nullptr;
+	if (PeripheralPerceptionComponent)
+	{
+		PeripheralPerceptionComponent->OnTargetPerceptionUpdated.RemoveDynamic(this, &UAIAS_STE_Bully_Perception::OnTargetAcquisitionPerceptionUpdated);
+	}
+	
+	if (FocusedPerceptionComponent)
+	{
+		FocusedPerceptionComponent->OnTargetPerceptionUpdated.RemoveDynamic(this, &UAIAS_STE_Bully_Perception::OnFocusedTargetPerceptionUpdated);
+		FocusedPerceptionComponent->OnTargetPerceptionForgotten.RemoveDynamic(this, &UAIAS_STE_Bully_Perception::OnFocusedTargetPerceptionForgotten);
+	}
+	
+	PeripheralPerceptionComponent = nullptr;
+	FocusedPerceptionComponent = nullptr;
 	OwnerController = nullptr;
 	Owner = nullptr;
 }
@@ -74,7 +99,7 @@ void UAIAS_STE_Bully_Perception::Tick(FStateTreeExecutionContext& Context, float
 	bHasPendingMotivation = false;
 }
 
-void UAIAS_STE_Bully_Perception::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
+void UAIAS_STE_Bully_Perception::OnFocusedTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
 	if (!Actor)
 	{
@@ -87,7 +112,7 @@ void UAIAS_STE_Bully_Perception::OnTargetPerceptionUpdated(AActor* Actor, FAISti
 
 		if (Stimulus.Type == UAISense::GetSenseID<UAISense_Sight>())
 		{
-			ReceiveSightStimulus(Actor);
+			ReceiveFocusedSightStimulus(Actor);
 			return;
 		}
 
@@ -105,7 +130,7 @@ void UAIAS_STE_Bully_Perception::OnTargetPerceptionUpdated(AActor* Actor, FAISti
 	}
 }
 
-void UAIAS_STE_Bully_Perception::OnTargetPerceptionForgotten(AActor* Actor)
+void UAIAS_STE_Bully_Perception::OnFocusedTargetPerceptionForgotten(AActor* Actor)
 {
 	if (Actor != AcquiredTarget.Get())
 	{
@@ -115,7 +140,7 @@ void UAIAS_STE_Bully_Perception::OnTargetPerceptionForgotten(AActor* Actor)
 	ForgetTarget();
 }
 
-void UAIAS_STE_Bully_Perception::ReceiveSightStimulus(AActor* Actor)
+void UAIAS_STE_Bully_Perception::ReceiveFocusedSightStimulus(AActor* Actor)
 {
 	bIsSightStimulusReceived = true;
 	bIsTargetSeen = true;
@@ -132,7 +157,20 @@ void UAIAS_STE_Bully_Perception::ReceivePredictionStimulus(AActor* Actor, const 
 
 	PredictedTargetLocation = Stimulus.StimulusLocation;
 
-	QueueMotivation(FGameplayTag::RequestGameplayTag(FName("Bully.Motivation.Attack.TryFindTarget")));
+	QueueMotivation(FGameplayTag::RequestGameplayTag(FName("Bully.Motivation.Pursue.TryFindTarget")));
+}
+
+void UAIAS_STE_Bully_Perception::OnTargetAcquisitionPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
+{
+	if (!Actor || !Stimulus.WasSuccessfullySensed())
+	{
+		return;
+	}
+
+	if (Stimulus.Type == UAISense::GetSenseID<UAISense_Sight>())
+	{
+		AcquireTarget(Actor);
+	}
 }
 
 void UAIAS_STE_Bully_Perception::AcquireTarget(AActor* Actor)
@@ -145,7 +183,7 @@ void UAIAS_STE_Bully_Perception::AcquireTarget(AActor* Actor)
 	AcquiredTarget = Actor;
 	OwnerController->SetFocus(AcquiredTarget.Get());
 
-	QueueMotivation(FGameplayTag::RequestGameplayTag(FName("Bully.Motivation.Attack")));
+	QueueMotivation(FGameplayTag::RequestGameplayTag(FName("Bully.Motivation.Pursue")));
 }
 
 void UAIAS_STE_Bully_Perception::LoseSightOfTarget()
@@ -178,7 +216,7 @@ void UAIAS_STE_Bully_Perception::ForgetTarget()
 		OwnerController->ClearFocus(EAIFocusPriority::Gameplay);
 	}
 
-	QueueMotivation(FGameplayTag::RequestGameplayTag(FName("Bully.Motivation.Search")));
+	QueueMotivation(FGameplayTag::RequestGameplayTag(FName("Bully.Motivation.Patrol")));
 }
 
 void UAIAS_STE_Bully_Perception::QueueMotivation(const FGameplayTag& NewMotivation)

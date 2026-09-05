@@ -14,24 +14,65 @@ AAIAS_AIC_Bully::AAIAS_AIC_Bully()
 		SetStateTree(BullyStateTree.Object);
 	}
 	
-	// ===== Perception =====
+	// ===== Focused Perception =====
 	
-	AIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerceptionComponent"));
-	SetPerceptionComponent(*AIPerceptionComponent);
+	FocusedAIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("FocusedAIPerceptionComponent"));
+	SetPerceptionComponent(*FocusedAIPerceptionComponent);
 	
-	SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("SightConfig"));
-	SightConfig->SightRadius = 1000.f;
-	SightConfig->LoseSightRadius = 1500.f;
-	SightConfig->PeripheralVisionAngleDegrees = 90.f;
-	SightConfig->DetectionByAffiliation = FAISenseAffiliationFilter(true, true, true);
-	SightConfig->PointOfViewBackwardOffset = 250.f;
-	SightConfig->NearClippingRadius = 175.f;
-	SightConfig->SetMaxAge(5.f);
+	FocusedSightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("FocusedSightConfig"));
+	FocusedSightConfig->SightRadius = 2000.f;
+	FocusedSightConfig->LoseSightRadius = 2500.f;
+	FocusedSightConfig->PeripheralVisionAngleDegrees = 30.f;
+	FocusedSightConfig->DetectionByAffiliation = FAISenseAffiliationFilter(true, true, true);
+	FocusedSightConfig->SetMaxAge(5.f);
 	
 	PredictionConfig = CreateDefaultSubobject<UAISenseConfig_Prediction>(TEXT("PredictionConfig"));
 	PredictionConfig->SetMaxAge(5.f);
 
-	AIPerceptionComponent->ConfigureSense(*SightConfig);
-	AIPerceptionComponent->ConfigureSense(*PredictionConfig);
-	AIPerceptionComponent->SetDominantSense(SightConfig->GetSenseImplementation());
+	FocusedAIPerceptionComponent->ConfigureSense(*FocusedSightConfig);
+	FocusedAIPerceptionComponent->ConfigureSense(*PredictionConfig);
+	FocusedAIPerceptionComponent->SetDominantSense(FocusedSightConfig->GetSenseImplementation());
+	
+	// ===== Peripheral Perception =====
+	
+	PeripheralAIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("PeripheralAIPerceptionComponent"));
+	
+	PeripheralSightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("PeripheralSightConfig"));
+	PeripheralSightConfig->SightRadius = 1000.f;
+	PeripheralSightConfig->LoseSightRadius = 1000.f;
+	PeripheralSightConfig->PeripheralVisionAngleDegrees = 100.f;
+	PeripheralSightConfig->DetectionByAffiliation = FAISenseAffiliationFilter(true, true, true);
+	PeripheralSightConfig->SetMaxAge(1.f);
+
+	PeripheralAIPerceptionComponent->ConfigureSense(*PeripheralSightConfig);
+	PeripheralAIPerceptionComponent->SetDominantSense(PeripheralSightConfig->GetSenseImplementation());
+	
+	// ===== Proximity Perception =====
+	
+	ProximityAIPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("ProximityAIPerceptionComponent"));
+	
+	ProximitySightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("ProximitySightConfig"));
+	ProximitySightConfig->SightRadius = 150.f;
+	ProximitySightConfig->LoseSightRadius = 150.f;
+	ProximitySightConfig->PeripheralVisionAngleDegrees = 360.f;
+	ProximitySightConfig->DetectionByAffiliation = FAISenseAffiliationFilter(true, true, true);
+	ProximitySightConfig->SetMaxAge(1.f);
+
+	ProximityAIPerceptionComponent->ConfigureSense(*ProximitySightConfig);
+	ProximityAIPerceptionComponent->SetDominantSense(ProximitySightConfig->GetSenseImplementation());
+}
+
+UAIPerceptionComponent* AAIAS_AIC_Bully::GetFocusedPerceptionComponent() const
+{
+	return FocusedAIPerceptionComponent;
+}
+
+UAIPerceptionComponent* AAIAS_AIC_Bully::GetPeripheralPerceptionComponent() const
+{
+	return PeripheralAIPerceptionComponent;
+}
+
+UAIPerceptionComponent* AAIAS_AIC_Bully::GetProximityPerceptionComponent() const
+{
+	return ProximityAIPerceptionComponent;
 }
