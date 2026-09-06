@@ -4,11 +4,11 @@
 #include "StateTreePropertyRef.h"
 #include "StateTree/Tasks/AIAS_STT.h"
 
-#include "AIAS_STT_MoveToRandomLocation.generated.h"
+#include "AIAS_STT_FindRandomLocation.generated.h"
 
 /** Instance data for generating a random reachable movement destination. */
 USTRUCT()
-struct BACHELORTHESIS_API FAIAS_STT_MoveToRandomLocation_InstanceData : public FAIAS_STT_InstanceData
+struct BACHELORTHESIS_API FAIAS_STT_FindRandomLocation_InstanceData : public FAIAS_STT_InstanceData
 {
 	GENERATED_BODY()
 	
@@ -21,11 +21,11 @@ struct BACHELORTHESIS_API FAIAS_STT_MoveToRandomLocation_InstanceData : public F
 
 /** Generates a random reachable navigation point around the owning AIAS NPC. */
 USTRUCT()
-struct BACHELORTHESIS_API FAIAS_STT_MoveToRandomLocation : public FAIAS_STT
+struct BACHELORTHESIS_API FAIAS_STT_FindRandomLocation : public FAIAS_STT
 {
 	GENERATED_BODY()
 	
-	using FInstanceDataType = FAIAS_STT_MoveToRandomLocation_InstanceData;
+	using FInstanceDataType = FAIAS_STT_FindRandomLocation_InstanceData;
 	virtual const UStruct* GetInstanceDataType() const override
 	{
 		return FInstanceDataType::StaticStruct();

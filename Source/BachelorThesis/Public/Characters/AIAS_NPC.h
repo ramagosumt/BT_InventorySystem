@@ -9,6 +9,7 @@
 #define ECC_NPC ECC_GameTraceChannel3
 
 class ABachelorThesisCharacter;
+class AAIAS_AIP_SplinePath;
 class UBaseInteractableComponent;
 class UDialogueComponent;
 class UTextRenderComponent;
@@ -65,6 +66,13 @@ public:
 	 */
 	void SetMovementGait(EAIAS_NPC_MovementGait NewGait);
 	
+	// ===== Pathing =====
+	
+	void AdvanceSplinePoint();
+	
+	AAIAS_AIP_SplinePath* GetSplinePath() const;
+	FVector GetCurrentSplinePointLocation() const;
+	
 	// ===== Interaction =====
 	
 	void ShowInteractionWidget() const;
@@ -93,6 +101,14 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "AIAS|Movement")
 	FAIAS_NPC_MovementProfile MovementProfile;
+	
+	// ===== Pathing =====
+	
+	UPROPERTY(EditInstanceOnly, Category = "AIAS|Movement")
+	TObjectPtr<AAIAS_AIP_SplinePath> SplinePath;
+	
+	int32 CurrentSplinePointIndex = 0;
+	int32 SplineDirection = 1;
 
 	// ===== Interaction =====
 	

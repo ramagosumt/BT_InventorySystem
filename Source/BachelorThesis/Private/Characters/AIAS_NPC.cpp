@@ -1,5 +1,6 @@
 #include "Characters/AIAS_NPC.h"
 
+#include "Actors/AIAS_AIP_SplinePath.h"
 #include "Components/BaseInteractableComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/DialogueComponent.h"
@@ -50,6 +51,7 @@ AAIAS_NPC::AAIAS_NPC()
 	{
 		MovementComponent->bRequestedMoveUseAcceleration = true;
 		MovementComponent->GetNavMovementProperties()->bUseAccelerationForPaths = true;
+		MovementComponent->GetNavMovementProperties()->bUseFixedBrakingDistanceForPaths = false;
 	}
 
 	// ===== Interaction =====
@@ -147,6 +149,40 @@ void AAIAS_NPC::Interact(ABachelorThesisCharacter* PlayerCharacter)
 	{
 		DialogueComponent->Interact(PlayerCharacter);
 	}
+}
+
+void AAIAS_NPC::AdvanceSplinePoint()
+{
+	if (!SplinePath)
+	{
+		return;
+	}
+
+	CurrentSplinePointIndex += SplineDirection;
+
+	if (CurrentSplinePointIndex == SplinePath->GetSplinePointCount()-1)
+	{
+		SplineDirection = -1;
+	}
+	else if (CurrentSplinePointIndex == 0)
+	{
+		SplineDirection = 1;
+	}
+}
+
+AAIAS_AIP_SplinePath* AAIAS_NPC::GetSplinePath() const
+{
+	return SplinePath;
+}
+
+FVector AAIAS_NPC::GetCurrentSplinePointLocation() const
+{
+	if (!SplinePath)
+	{
+		return FVector::ZeroVector;
+	}
+
+	return SplinePath->GetSplinePointLocation(CurrentSplinePointIndex);
 }
 
 void AAIAS_NPC::BeginPlay()

@@ -1,11 +1,11 @@
-#include "StateTree/Tasks/AIAS_STT_MoveToRandomLocation.h"
+#include "StateTree/Tasks/AIAS_STT_FindRandomLocation.h"
 
 #include "Characters/AIAS_NPC.h"
 #include "Controllers/AIAS_AIC.h"
 #include "NavigationSystem.h"
 #include "StateTreeExecutionContext.h"
 
-EStateTreeRunStatus FAIAS_STT_MoveToRandomLocation::EnterState(FStateTreeExecutionContext& Context, const FStateTreeTransitionResult& Transition) const
+EStateTreeRunStatus FAIAS_STT_FindRandomLocation::EnterState(FStateTreeExecutionContext& Context, const FStateTreeTransitionResult& Transition) const
 {
 	const FInstanceDataType& Data = Context.GetInstanceData(*this);
 	

@@ -4,8 +4,8 @@
 
 AAIAS_NPC_Student::AAIAS_NPC_Student()
 {
-	
 	// ===== Character =====
+	
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> StudentMesh(TEXT("/Game/Characters/Mannequins/Meshes/SKM_Manny"));
 	if (StudentMesh.Succeeded())
 	{
