@@ -48,28 +48,35 @@ Root
 │   │   ├── Conditions
 │   │   │   └── bIsTargetSeen == true
 │   │   │
-│   │   ├── Tasks
-│   │   │   └── MoveToTarget
+│   │   ├── MoveToTarget
+│   │   │   ├── Tasks
+│   │   │   │   └── MoveTo
+│   │   │   │
+│   │   │   └── Transitions
+│   │   │       ├── On State Succeeded → Wait
+│   │   │       └── On State Failed → Root
 │   │   │
 │   │   ├── Wait
 │   │   │   └── Transitions
-│   │   │       └── On State Completed → SeeTarget
+│   │   │       └── On State Completed → ReachTarget
 │   │   │
 │   │   └── Transitions
-│   │       ├── On Tick
-│   │       │    ├── Motivation === Pursue.TryFindTarget
-│   │       │    └── → LostTarget
 │   │       └── On Tick
-│   │            ├── Motivation === Pursue.TryEngageTarget
-│   │            └── → ReachTarget
+│   │           ├── Motivation === Pursue.TryFindTarget
+│   │           └── → LostTarget
 │   │
 │   ├── LostTarget
 │   │   ├── Conditions
 │   │   │   ├── Motivation === Pursue.TryFindTarget
 │   │   │   └── bIsTargetSeen == false
 │   │   │
-│   │   ├── Tasks
-│   │   │   └── MoveTo PredictedTargetLocation
+│   │   ├── MoveToPredictedLocation
+│   │   │   ├── Tasks
+│   │   │   │   └── MoveTo PredictedTargetLocation
+│   │   │   │   
+│   │   │   └── Transitions
+│   │   │       └── On State Succeeded → Wait
+│   │   │       └── On State Failed → Wait
 │   │   │
 │   │   ├── Wait
 │   │   │   └── Transitions
@@ -80,5 +87,10 @@ Root
 │   │           └── → SeeTarget
 │   │
 │   └── ReachTarget
+│       └── Transitions
+│           └── On State Completed → Prepare
 │
 └── Prepare
+    └── Wait
+       └── Transitions
+           └── On State Completed → Root  

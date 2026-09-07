@@ -169,7 +169,7 @@ void UAIAS_STE_Bully_Perception::OnTargetAcquisitionPerceptionUpdated(AActor* Ac
 
 	if (Stimulus.Type == UAISense::GetSenseID<UAISense_Sight>())
 	{
-		AcquireTarget(Actor);
+		OwnerController->SetFocus(AcquiredTarget.Get());
 	}
 }
 
