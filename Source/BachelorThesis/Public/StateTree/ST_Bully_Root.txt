@@ -1,0 +1,84 @@
+Root
+│
+├── Patrol
+│   ├── Conditions
+│   │   └── Motivation == Patrol
+│   │
+│   ├── Tasks
+│   │   └── SetMovementGait
+│   │
+│   ├── Loiter
+│   │   ├── Conditions
+│   │   │   └── HasSplinePath == false
+│   │   │
+│   │   ├── Wait
+│   │   │   └── Transitions
+│   │   │       └── On State Completed → Root  
+│   │
+│   ├── Wander
+│   │   ├── Conditions
+│   │   │   └── HasSplinePath == true
+│   │   │
+│   │   ├── MoveToNextSplinePoint
+│   │   │   ├── Tasks
+│   │   │   │   ├── FindCurrentSplineLocation
+│   │   │   │   ├── MoveTo
+│   │   │   │   └── AdvanceSplinePoint
+│   │   │   │
+│   │   │   └── Transitions
+│   │   │       └── On State Completed → Wait
+│   │   │
+│   │   └── Wait
+│   │       └── Transitions
+│   │           └── On State Completed → Root
+│   │
+│   └── Transitions
+│       └── On Tick
+│           ├── Motivation == Pursue
+│           └── → Pursue
+│
+├── Pursue
+│   ├── Conditions
+│   │   └── Motivation == Pursue
+│   │
+│   ├── Tasks
+│   │   └── SetMovementGait
+│   │
+│   ├── SeeTarget
+│   │   ├── Conditions
+│   │   │   └── bIsTargetSeen == true
+│   │   │
+│   │   ├── Tasks
+│   │   │   └── MoveToTarget
+│   │   │
+│   │   ├── Wait
+│   │   │   └── Transitions
+│   │   │       └── On State Completed → SeeTarget
+│   │   │
+│   │   └── Transitions
+│   │       ├── On Tick
+│   │       │    ├── Motivation === Pursue.TryFindTarget
+│   │       │    └── → LostTarget
+│   │       └── On Tick
+│   │            ├── Motivation === Pursue.TryEngageTarget
+│   │            └── → ReachTarget
+│   │
+│   ├── LostTarget
+│   │   ├── Conditions
+│   │   │   ├── Motivation === Pursue.TryFindTarget
+│   │   │   └── bIsTargetSeen == false
+│   │   │
+│   │   ├── Tasks
+│   │   │   └── MoveTo PredictedTargetLocation
+│   │   │
+│   │   ├── Wait
+│   │   │   └── Transitions
+│   │   │       └── On State Completed → Pursue
+│   │   └── Transitions
+│   │       └── On Tick
+│   │           ├── Motivation === Pursue
+│   │           └── → SeeTarget
+│   │
+│   └── ReachTarget
+│
+└── Prepare

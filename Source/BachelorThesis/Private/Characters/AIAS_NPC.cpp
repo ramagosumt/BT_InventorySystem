@@ -15,7 +15,7 @@ AAIAS_NPC::AAIAS_NPC()
 	PrimaryActorTick.bCanEverTick = false;
 		
 	// ===== Character =====
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> DefaultMesh(TEXT("/Game/Characters/Mannequins/Meshes/SKM_Manny"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> DefaultMesh(TEXT("/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple"));
 	if (DefaultMesh.Succeeded())
 	{
 		GetMesh()->SetSkeletalMeshAsset(DefaultMesh.Object);
@@ -168,6 +168,11 @@ void AAIAS_NPC::AdvanceSplinePoint()
 	{
 		SplineDirection = 1;
 	}
+}
+
+bool AAIAS_NPC::HasSplinePath() const
+{
+	return SplinePath != nullptr;
 }
 
 AAIAS_AIP_SplinePath* AAIAS_NPC::GetSplinePath() const

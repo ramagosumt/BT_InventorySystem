@@ -70,6 +70,8 @@ public:
 	
 	void AdvanceSplinePoint();
 	
+	bool HasSplinePath() const;
+	
 	AAIAS_AIP_SplinePath* GetSplinePath() const;
 	FVector GetCurrentSplinePointLocation() const;
 	

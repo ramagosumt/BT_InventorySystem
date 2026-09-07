@@ -6,7 +6,7 @@ AAIAS_NPC_Bully::AAIAS_NPC_Bully()
 {
 	// ===== Character =====
 	
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> BullyMesh(TEXT("/Game/Characters/Mannequins/Meshes/SKM_Manny"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> BullyMesh(TEXT("/Game/Characters/Mannequins/Meshes/SKM_Manny_Simple"));
 	if (BullyMesh.Succeeded())
 	{
 		GetMesh()->SetSkeletalMeshAsset(BullyMesh.Object);
